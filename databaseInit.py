@@ -1,13 +1,25 @@
 import sqlite3
 from sqlite3 import Error
 
-create_users  = """
+students  = """
 CREATE TABLE IF NOT EXISTS users (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
-  name TEXT NOT NULL,
-  age INTEGER,
-  gender TEXT,
-  nationality TEXT
+  year INTEGER,
+  house TEXT,
+  maths TEXT,
+  hums TEXT,
+  science TEXT,
+  adt TEXT,
+  genshin TEXT,
+  uni TEXT,
+  f1 TEXT,
+  sport TEXT,
+  tutorMath TEXT,
+  tutorEng TEXT,
+  tutorHums TEXT,
+  tutorScience TEXT,
+  tutorAdt TEXT,
+  friends INTEGER
 );
 """
 
@@ -38,12 +50,12 @@ def delete_all_tasks(conn):
     :param conn: Connection to the SQLite database
     :return:
     """
-    sql = 'DELETE FROM create_users'
+    sql = 'DELETE FROM '
     cur = conn.cursor()
     cur.execute(sql)
     conn.commit()
 
 
 create_connection("data.sqlite")
-execute_query(connection, create_users)  
-delete_all_tasks(connection)
+execute_query(connection, students)  
+#delete_all_tasks(connection)
