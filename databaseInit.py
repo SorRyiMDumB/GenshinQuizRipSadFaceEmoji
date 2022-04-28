@@ -1,10 +1,12 @@
 import sqlite3
 from sqlite3 import Error
+from tkinter.messagebox import YES
+from userdata import userdataraw
 
 students  = """
 CREATE TABLE IF NOT EXISTS users (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
-  year INTEGER,
+  yearlevel INTEGER,
   house TEXT,
   maths TEXT,
   hums TEXT,
@@ -55,7 +57,34 @@ def delete_all_tasks(conn):
     cur.execute(sql)
     conn.commit()
 
+def execute_read_query(connection, query):
+    cursor = connection.cursor()
+    result = None
+    try:
+        cursor.execute(query)
+        result = cursor.fetchall()
+        return result
+    except Error as e:
+        print(f"The error '{e}' occurred")
+
+def execute_read_query(connection, query):
+    cursor = connection.cursor()
+    result = None
+    try:
+        cursor.execute(query)
+        result = cursor.fetchall()
+        return result
+    except Error as e:
+        print(f"The error '{e}' occurred")
 
 create_connection("data.sqlite")
-execute_query(connection, students)  
+execute_query(connection, students)
+execute_query(connection, userdataraw)   
+
+select_users = "SELECT * from users"
+yes = execute_read_query(connection, select_users)
+
+for i in yes:
+    print(i)
+
 #delete_all_tasks(connection)
