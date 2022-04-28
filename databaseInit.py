@@ -8,21 +8,18 @@ CREATE TABLE IF NOT EXISTS users (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   yearlevel INTEGER,
   house TEXT,
-  maths TEXT,
-  hums TEXT,
-  science TEXT,
-  adt TEXT,
+  classes TEXT,
   genshin TEXT,
   uni TEXT,
+  course TEXT,
   f1 TEXT,
   sport TEXT,
   tutorMath TEXT,
   tutorEng TEXT,
   tutorHums TEXT,
   tutorScience TEXT,
-  tutorAdt TEXT,
   friends INTEGER
-);
+)
 """
 
 def create_connection(path):

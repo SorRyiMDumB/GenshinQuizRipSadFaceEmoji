@@ -1,7 +1,34 @@
 userdataraw = """
 INSERT INTO
-  users (yearlevel,house,maths,hums,science,adt,genshin,uni,f1,sport,tutorMath,tutorEng,tutorHums,tutorScience,tutorAdt,friends)
-VALUES
-  (12, 'R', 'ISKANDER', '0','MALONE','0','ALBEDO','MEL', 'HAAS','FENCING','TRUE','0','0','0','0','50')
+  users (yearlevel,house,classes,genshin,uni,course,f1,sport,tutorMath,tutorEng,tutorHums,tutorScience,friends)
+VALUES                           
+  (12,'B','12BM03~12ENL01~12FMA01~12MME06~12PHY03','0','MEL','COM','0','0','1','1','0','0',50),
+  (12,'R','12ALG01~12MME05~12CHE03~12BM03~12ENL01','0','MEL','FIN','0','0','0','0','0','0',10),
+  (12,'C','12BM01~12ENG09~12MME08~12PE01~12PHY02','0','MON','COM','MCLAREN','BBALL','1','0','0','1',100),
+  (11,'C','11BIO01~11GMS01~11ENG06~11CHE06~11HIA01~11LIT01','0','UTRECHT','MED','0','0','0','0','0','1',50),
+  (11,'B','11VC01~11ENG01~11GM01~11PSY02~11LSO1~11FST01','Hu tao','MEL','LIT','0','SWIM ','0','0','0','0',50),
+  (12,'K','12CHE06~12ENG02~12MME04~12PHY02~12SMA02','0','MON','MED','0','CRICKET','0','0','0','0',50),
+  (12,'K','12COM01~12CHE04~12PHY02~12ENG04~12MME06','Venti','MON','ENG','RED BULL','0','0','0','0','0',50),
+  (12,'R','12ENG03~12HIA01~12LS03~12PSY01~12GLP01','0','MEL','ART','0','MMA','0','0','0','0',100),
+  (12,'C','12MME09~12SMA01~12CHE06~12ENG04','0','MEL','MED','0','BBALL','1','0','0','1',100),
+  (12,'B','12HIA01~12CHE~12BIO~12DRA~12ENG','0','0','MED','0','MMA','0','1','0','1',50),
+  (12,'R','12ENG05~12LS03~12PSY02~12FMA01~12BM03','0','MEL','PSY','0','0','0','0','0','0',50),
+  (12,'C','12LS02~12ENG04~12MME03~12ACC03~12FMA03','0','MON','LAW','0','SWIM ','0','1','0','0',50),
+  (12,'C','12LIT01~12STA01~12MME04~12PHY03~12MED01','0','MEL','ART','HAAS','0','0','0','0','0',50),
+  (12,'B','12PHY~12CHEM~12SMA~12ENL~12MME.','0','MEL','SCI','0','0','1','1','1','1',10),
+  (12,'R','12ALG01~12MME04~12PHY03~12SMA01~12ENG07','Sucrose','RMIT','ENG','WILLIAMS','MMA','1','0','0','0',10),
+  (12,'R','12MME08~12CHE05~12ENG08~12PSY03~12FRE01','0','MON','MED','0','NETBALL','1','1','1','1',100),
+  (12,'R','12DRA01~12ENG01~12ACC01~12ECO01','Yelan ','MON','0','0','0','0','0','0','0',50),
+  (12,'K','12DRA01~12LIT01~12FMA04~12PSY04~12LS01','Raiden Shogun','MON','LAW','ALFA ROMEO','0','0','1','0','0',100),
+  (12,'K','12HIA01~12LS03~12FMA04~12PSY01~12ENG05','0','MEL','LAW','0','MMA','1','1','0','0',10),
+  (12,'R','12ENG03~12LIT01~12HHD01~12BM03~12PSY02','Razor','RMIT','0','FERRARI','0','0','0','0','0',10),
+  (12,'R','12LS01~12ENL01~12BM02~12MS01~12CHI01','0','MEL','MUS','0','0','0','0','0','0',50),
+  (12,'B','12MME08~12BIO04~12HHD01~12FMA03~12ENG04','0','MEL','ART','0','CRICKET','0','0','0','1',100),
+  (12,'K','12CHE01~12ENG07~12MME08~12PHY03~12SMA01','Lisa','VIC','ENG','0','0','0','0','0','0',10),
+  (12,'K','12FM03~12MM05~12ENG~12ALG01~12BM03','0','MON','0','0','0','1','0','0','0',50),
+  (12,'K','12MME02~12PHY02~12CHE03~12ENG09~12FMA01','Hutao','MON','ENG','RED BULL','TENNIS','0','0','0','0',50),
+  (12,'C','12MME05~12LAT01~12ENL01~12CHE01','0','0','0','FERRARI','TENNIS','0','0','0','0',50)
+  
 
+  
 """
