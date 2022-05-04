@@ -67,10 +67,3 @@ cursor = connection.cursor()
 cursor.execute("DROP TABLE users")
 execute_query(connection, students)
 execute_query(connection, userdataraw)   
-
-
-
-select_users = "SELECT * from users"
-yes = execute_read_query(connection, select_users)
-for i in yes:
-    print(i)
