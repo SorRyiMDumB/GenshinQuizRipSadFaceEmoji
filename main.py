@@ -1,13 +1,10 @@
 #bruh
-'''
-__author__ = "Yaseen Ahmad"
-__task__ = "Outcome 1,2,3"
-
-'''
 
 ### IMPORTS
 # Database
 import sqlite3
+
+from numpy import append
 
 import databaseInit 
 from databaseInit import *
@@ -39,37 +36,40 @@ def addnodes():
         i[0], 
         year = i[1],                # shape /////
         house = i[2],               # edge, color, outline /////
-        classes = i[3],             # edge 
-        genshin = i[4],                 # edge, color, outline
-        uni = i[5],                 # edge
-        course = i[6],              # edge
-        f1 = i[7],              # edge, color, shape outline
-        sport = i[8],               # edge, shape color outline
-        tutorMath = i[9],               # edge
-        tutorEng = i[10],               # edge
-        tutorHums = i[11],              # edge
-        tutorScience = i[12],               # edge
-        friends = i[13]                 # size 
+        classes = i[3],             # edge /////
+        genshin = i[4],                 # edge, color, outline /////
+        uni = i[5],                 # edge /////
+        course = i[6],              # edge ///// 
+        f1 = i[7],              # edge, shape outline ///// 
+        sport = i[8],               # edge, color outline ///// 
+        tutorMath = i[9],               # edge ///// 
+        tutorEng = i[10],               # edge ///// 
+        tutorHums = i[11],              # edge ///// 
+        tutorScience = i[12],               # edge ///// 
+        friends = i[13],                 # size
+        
+        colour = "white",
+        weight = "1",
+        shape = "o",
+        outline = "black"
         )
 
 
 ### CREATORS
 def node_con_exist(param,given_colour,given_weight):
-    ''' 
-    Connects all nodes where data is present in the param given.
-    
-    ### EXAMPLE USAGE
-    All nodes with param = food will be connected 
-        and given atributes colour = given colur and weight = given_weight
+    """Connects all nodes where data is present in the param given.
 
-    '''
+    ### Args:
+        param (string): connects if param is true
+        given_colour (string): what the color of node should be
+        given_weight (float): what the wieght of the node should be
+    """
 
     worklist = []               # creates a working list
 
     for node, data in G.nodes(data=True): # checks if data param is present in the graph
         if data[param] != "0":              # checks if the data exists 
             worklist.append(node)               #adds node to working list
-    print(param, worklist)
 
     while len(worklist) != 0:               # runs until the list is empty
         for i in worklist:
@@ -106,35 +106,45 @@ def attributor(param,testcase,atri,atri_data):
     '''
     Gives all nodes with atribute "param", that equal to a testcase "testcase", a new atribute "arti" with data "atri_data"
 
+    ### EXAMPLE USAGE 
+    All nodes with param = food and testcase = burger will be connected
+        and given atributes colour = given colur and weight = given_weight
+
     '''
 
     worklist = []
 
-    for node, data in G.nodes(data=True):               # checks if data param is present in the graph
-        if data[param] == testcase:             # checks if the data retrieved is equal to test case
+    for node in G:               # checks if data param is present in the graph
+        if G.nodes[node][param] == testcase:
             worklist.append(node)
-    
-    while len(worklist) != 0:               # runs until the list is empty 
-        for i in worklist:
-            if i == worklist[0]:                # if the list is empty the function is ended 
-                pass
-            else:
-                G.nodes[worklist[0]][atri] = atri_data
-        worklist.pop(0)
+        else:
+            pass
 
+    print("List that satisfy", testcase, "are: ", worklist)
+
+    for i in worklist:
+        # i = nodes that statfiy condition
+        G.nodes[i][atri] = atri_data
+
+def cheesyfunc(arti):
+    list = []
+
+    cheese = nx.get_node_attributes(G, arti).values()
+    for i in cheese:
+        list.append(i)
+    return list
 
 ### NODE GENERATION
 def year_node():
+    '''
+    Attributes nodes with a shape depending on their year level
+    '''
     attributor("year","11","shape","triangle")
     attributor("year","12","shape","circle")
 
 def house_node(type):
     '''
-    Draws graph where all student in same house are connected.
-    
-    ### TYPE
-    if type = colour then node will be given an attribute named colour based on house
-        if type = outline then node will be given an attribute named outline based on house
+    Attributes nodes with a outline/colour depending on their house
     '''
     
     if type == "colour":
@@ -149,6 +159,52 @@ def house_node(type):
         attributor("house","B","outline","blue")
         attributor("house","C","outline","green")
 
+def genshin_node(type,color):
+    '''
+    Attributes nodes with a colour/outline depending on if they play genshinn
+    '''
+    
+    if type == "colour":
+        attributor("genshin",True,"colour",color)
+    
+    if type == "outline":
+        attributor("genshin",True,"outline",color)
+
+def f1_node(type,color):
+    
+    if type == "shape":
+        attributor("f1",True,"shape",color)
+    
+    if type == "outline":
+        attributor("f1",True,"outline",color)
+
+def sport_node(type, color : list):
+    """Attributes nodes with a color/outline based on their sport
+
+    ### Args:
+        type (str): what atribute to modify
+        color (list): list containing the colors to change it to
+
+    ### List order
+        BBALL[0], SWIM[1], CRICKET[2], MMA[3], NETBALL[4], TENNIS[5]
+    """
+    
+    if type == "colour":
+        attributor("sport","BBALL","colour",str(color[0]))
+        attributor("sport","SWIM", "colour",str(color[1]))
+        attributor("sport","CRICKET", "colour",str(color[2]))
+        attributor("sport","MMA", "colour",str(color[3]))
+        attributor("sport","NETBALL", "colour",str(color[4]))
+        attributor("sport","TENNIS", "colour",str(color[5]))
+    
+    if type == "outline":
+        attributor("sport","BBALL","colour",color)
+        attributor("sport","SWIM", "colour",color)
+        attributor("sport","CRICKET", "colour",color)
+        attributor("sport","MMA", "colour",color)
+        attributor("sport","NETBALL", "colour",color)
+        attributor("sport","TENNIS", "colour",color)
+
 
 ### EDGE GENERATION
 def house_edge():
@@ -161,11 +217,29 @@ def house_edge():
     node_con_test("house","C","green","1")
     node_con_test("house","K","red","1")
 
-def                     classes_edge():
+def classes_edge(given_colour,):
+    for node in G:
+        raw = G.nodes[node]["classes"]
+        worklist = raw.split("~")
+        
+        for testnode in G:
+            if node == testnode:
+                pass
+            else:
+                testraw = G.nodes[testnode]["classes"]
+                testworklist = testraw.split("~")
+                a = set(testworklist).intersection(worklist)
+                if len(a) == 0:
+                    pass
+                else:
+                    G.add_edge(node,testnode,colour= given_colour,weight= len(a))
+
+def genshin_edge():
     '''
-    Draws graph where all student in same classes
+    Draws graph where all student play genshin are connected.
     '''
-    pass
+
+    node_con_exist("genshin","pink","1")
 
 def uni_edge():
     '''
@@ -192,22 +266,6 @@ def f1_edge():
     '''
 
     node_con_exist("f1","red","1")
-    
-def genshin_edge():
-    '''
-    Draws graph where all student play genshin are connected.
-    '''
-
-    node_con_exist("genshin","pink","1")
-
-def tutor_edge():
-    '''
-    Draws graph where all student who do tutoring are connected.
-    '''
-    node_con_exist("tutorEng","pink","1")
-    node_con_exist("tutorMath","blue","1")
-    node_con_exist("tutorHums","red","1")
-    node_con_exist("tutorScience","green","1")
 
 def sport_edge():
     '''
@@ -221,25 +279,72 @@ def sport_edge():
     node_con_test("sport","NETBALL", "pink","1")
     node_con_test("sport","TENNIS", "orange","1")
 
-### RUNNING
+def tutor_edge():
+    '''
+    Draws graph where all student who do tutoring are connected.
+    '''
+    node_con_exist("tutorEng","pink","1")
+    node_con_exist("tutorMath","blue","1")
+    node_con_exist("tutorHums","red","1")
+    node_con_exist("tutorScience","green","1")
+
+
+### INIT
 init()
-sport_edge()
-house_edge()
 
-#print(nx.nodes(G))
+### ADD GRAPH ELEMENTS HERE
 
-pos = nx.spring_layout(G, seed=12345)
+#sport_node("colour",["yellow","blue", "green", "red", "gold", "lime"])
+#genshin_edge()
+#nodesize = nx.get_node_attributes(G, 'weight').values()
+classes_edge("black")
 
-edgecolor = nx.get_edge_attributes(G, 'colour').values()
-nodesize = nx.get_node_attributes(G, 'weight').values()
-nodecolour = nx.get_node_attributes(G, 'colour').values()
+### GRAPH DRAWING
+def draw_graph():
+    # position of nodes
+    pos = nx.spring_layout(G, seed=42)               
+    
+    # drawing nodes
+    for node in G:
+        worklist = [node]
+        nx.draw_networkx_nodes(
+            G,
+            pos,
+            nodelist = worklist,
+            node_size = (int(G.nodes[node]['weight']) * 500),
+            node_color = G.nodes[node]['colour'],
+            node_shape = G.nodes[node]["shape"],
+            edgecolors = G.nodes[node]["outline"],
+            label = node
+        )
+        nx.draw_networkx_labels(
+            G,
+            pos,
+            font_size=12,
+        )
 
-#nodes = nx.draw_networkx_nodes (G, pos, node_size=nodesize, node_color=nodecolour)
-edges = nx.draw_networkx_edges(G, pos, width=1, edge_color=edgecolor)
-#nx.draw_networkx(G,pos)
+    # drawing edges
+    edgecolor = nx.get_edge_attributes(G, 'colour').values()
 
-house_node("colour")
-print(G.nodes[1])
+    nx.draw_networkx_edges(
+        G,
+        pos,
+        width=1,
+        edge_color=edgecolor
+    )
 
-plt.show()
+    edgelabels = {}
+    for n1, n2, data in G.edges.data():
+        edgelabels[(n1, n2)] = data['weight']
+    nx.draw_networkx_edge_labels(
+        G,
+        pos,
+        edge_labels=edgelabels,
+        font_size=7
+    )
+    
 
+    #print(G.nodes[11])
+
+    plt.show()
+draw_graph()
