@@ -24,8 +24,13 @@ Generates a graph and runs algorithims on it using python.
 
 ## Help
 
-Idk just email me if you need any assitance creating new graphs
+### General Help
+Idk just email me if you need any assitance creating new graphs.
 
+### Known issues
+* Database is corrupt/not working ➡️ run databaseInit.py
+* Graph does not load ➡️ terminate process and try again
+* Some functions are not working :( yeah idk im trying to fix them
 
 ## Author
 Yaseen Ahmad 
