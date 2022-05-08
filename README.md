@@ -15,7 +15,7 @@ Generates a graph and runs algorithims on it using python.
 ### Installing
 
 * Download zip
-* ur on ur own for any modifications needed for files/folders 
+* Extract files into folder
 
 ### Executing program
 
