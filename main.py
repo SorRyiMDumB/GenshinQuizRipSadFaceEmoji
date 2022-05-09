@@ -2,7 +2,6 @@
 
 ### IMPORTS
 # Database
-from cProfile import label
 import sqlite3
 
 from numpy import append
@@ -54,6 +53,85 @@ def addnodes():
         shape = "o",
         outline = "black"
         )
+
+def connector_adv(param : str, colors : list, weights : list, labels : list):
+    """ Connects nodes that share the same parameter
+
+    Args:
+        param (str): Parameter to be checked 
+        colors (list): List of colours to give the nodes
+        weights (list): List of weights to give the nodes
+        labels (list): List of colours to give the nodes
+    """
+
+    # List of unique values in the parameter 
+    uniqueVal = []
+
+    # for every node in the graph 
+    for node in G:
+        # find the data assoicated with the parameter 
+        nodedata = G.nodes[node][param]
+        
+        # if the data found is already in the unique value list, skip 
+        if nodedata in uniqueVal:
+            pass
+        
+        # if data is not in unique value list, add data point
+        else:
+            uniqueVal.append(nodedata)
+    
+    # prints out statement saying what the unique values are in the parameter after all nodes have been searched
+    print("#####################\nThe unique values in parameter: ",param, " are ", uniqueVal)
+
+    # creates a simple counter to go through the lists provided to make sure the proper data is added to edges
+    listcounter = 0
+
+    # for every value in the unique value list 
+    for testcase in uniqueVal:
+        # reset the worklist everytime we test a new varible 
+        worklist = []
+
+        # for every node in the graph 
+        for node in G:
+            # find the data assioated with the parameter 
+            nodedata = G.nodes[node][param]
+
+            # if nodedata is the same as the varible we are testing against, add node to working list
+            if nodedata == testcase:
+                worklist.append(node)
+            
+            else:
+                pass
+        
+        # prints out a statement of which nodes are geting what attributes added to them 
+        print("\nValue: ", testcase, " has nodes: ", worklist, "  |  index number is",listcounter,
+        "\nColor:", colors[listcounter], "| Weight:", weights[listcounter], " | Label:", labels[listcounter])
+        
+        # while the working list contains nodes
+        while len(worklist) != 0:
+            # for every node in that working list
+
+            for node in worklist:
+
+                # if the node is the first item, skip
+                if node == worklist[0]:
+                    pass
+                
+                # connects an edge from the node and the first node on the working list, also assigns the artibutes 
+                else:
+                    G.add_edge(
+                    node,
+                    worklist[0],
+                    colour = str(colors[listcounter]),
+                    weight= weights[listcounter],            # connects nodes in working list with atributes
+                    label = str(labels[listcounter])
+                    )
+            # removes node that was just used to make a connection 
+            worklist.pop(0)
+        
+        # adds one to list counter so next time algo runs it uses next data
+        listcounter = listcounter + 1
+
 
 
 ### CREATORS
@@ -151,7 +229,7 @@ def house_node(type):
     Attributes nodes with a outline/colour depending on their house
     '''
     
-    if type == "colour":
+    if type == "node_color":
         attributor("house","R","colour","yellow")
         attributor("house","K","colour","red")
         attributor("house","B","colour","blue")
@@ -275,16 +353,13 @@ def f1_edge():
     node_con_exist("f1","red","1")
 
 def sport_edge():
-    '''
-    Draws graph where all student who do tutoring are connected.
-    '''
 
-    node_con_test("sport","BBALL", "yellow","1")
-    node_con_test("sport","SWIM", "blue","1")
-    node_con_test("sport","CRICKET", "green","1")
-    node_con_test("sport","MMA", "red","1")
-    node_con_test("sport","NETBALL", "pink","1")
-    node_con_test("sport","TENNIS", "orange","1")
+    node_con_test("sport","BBALL", "yellow","Basketball")
+    node_con_test("sport","SWIM", "blue","Swimming")
+    node_con_test("sport","CRICKET", "green","Cricket")
+    node_con_test("sport","MMA", "red","Mixed martial arts")
+    node_con_test("sport","NETBALL", "pink","Netball")
+    node_con_test("sport","TENNIS", "orange","Tennis")
 
 def tutor_edge():
     '''
@@ -301,21 +376,21 @@ init()
 
 ### ADD GRAPH ELEMENTS HERE
 
+#house_node("node_color")
 
-#genshin_edge()
-#nodesize = nx.get_node_attributes(G, 'weight').values()
-year_node()
-house_node("colour")
 #classes_edge("black")
 #sport_node("outline",["yellow","blue", "green", "red", "gold", "lime"])
-#sport_node("outline",["pink","pink", "pink", "pink", "pink", "pink"])
-course_edge()
+#sport_node("colour", ["pink","pink", "pink", "pink", "pink", "pink"])
+#sport_edge()
+#course_edge()
 
+connector_adv('house', ["blue", "yellow", "green", "red"], [1, 1, 1, 1], ["Blackwood", "Rothwell", "Cotrell", "Kororoit"])
+connector_adv('year', ["purple", "pink", "green", "red"], [1, 1, 1, 1], ["12", "11", "Cotrell", "Kororoit"])
 
 ### GRAPH DRAWING
 def draw_graph(cheese):
     # position of nodes
-    pos = nx.spring_layout(G, seed=42)               
+    pos = nx.spring_layout(G, seed = 42)               
     
     # drawing nodes
     for node in G:
@@ -359,7 +434,6 @@ def draw_graph(cheese):
     else:
         edgelabels = {}
         for n1, n2, data in G.edges.data():
-            print(n1,n2,data)
             edgelabels[(n1, n2)] = data['label']
         nx.draw_networkx_edge_labels(
             G,
@@ -372,4 +446,4 @@ def draw_graph(cheese):
 
     plt.show()
 #raw_graph("weight")
-draw_graph("labels")
+draw_graph('a')
