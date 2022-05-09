@@ -16,6 +16,8 @@ Generates a graph and runs algorithims on it using python.
 
 * Download zip
 * Extract files into folder
+* Install dependencies
+> pip install networkx matplotlib pysqlite3 numpy
 
 ### Executing program
 
