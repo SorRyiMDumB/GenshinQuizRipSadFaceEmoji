@@ -15,10 +15,7 @@ Generates a graph and runs algorithims on it using python.
 ### Installing
 
 * Download zip
-* Install dependencies
-* * > pip install networkx matplotlib pysqlite3 numpy
-
-
+* Extract files into folder
 
 ### Executing program
 
