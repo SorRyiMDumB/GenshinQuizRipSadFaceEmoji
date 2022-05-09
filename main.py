@@ -2,6 +2,7 @@
 
 ### IMPORTS
 # Database
+from cProfile import label
 import sqlite3
 
 from numpy import append
@@ -93,13 +94,16 @@ def node_con_test(param,testcase,given_colour,given_weight):
     for node, data in G.nodes(data=True):               # checks if data param is present in the graph
         if data[param] == testcase:             # checks if the data retrieved is equal to test case
             worklist.append(node)               # adds node to working list
-
+        print("List that satisfy", testcase, "are: ", worklist)
     while len(worklist) != 0:               # runs until the list is empty 
         for i in worklist:
             if i == worklist[0]:                # if the list is empty the function is ended 
                 pass
             else: 
-                G.add_edge(i,worklist[0],colour= given_colour,weight= given_weight)             # creates edges to all nodes and adds atributes
+                if type(given_weight) == str:
+                    G.add_edge(i,worklist[0],colour= given_colour,label= given_weight)
+                else:
+                    G.add_edge(i,worklist[0],colour= given_colour,weight= given_weight)             # creates edges to all nodes and adds atributes
         worklist.pop(0)
 
 def attributor(param,testcase,atri,atri_data):
@@ -139,8 +143,8 @@ def year_node():
     '''
     Attributes nodes with a shape depending on their year level
     '''
-    attributor("year","11","shape","triangle")
-    attributor("year","12","shape","circle")
+    attributor("year",11,"shape","^")
+    attributor("year",12,"shape","o")
 
 def house_node(type):
     '''
@@ -192,19 +196,21 @@ def sport_node(type, color : list):
     if type == "colour":
         attributor("sport","BBALL","colour",str(color[0]))
         attributor("sport","SWIM", "colour",str(color[1]))
-        attributor("sport","CRICKET", "colour",str(color[2]))
+        attributor("sport", "CRICKET", "colour",str(color[2]))
         attributor("sport","MMA", "colour",str(color[3]))
         attributor("sport","NETBALL", "colour",str(color[4]))
         attributor("sport","TENNIS", "colour",str(color[5]))
     
     if type == "outline":
-        attributor("sport","BBALL","colour",color)
-        attributor("sport","SWIM", "colour",color)
-        attributor("sport","CRICKET", "colour",color)
-        attributor("sport","MMA", "colour",color)
-        attributor("sport","NETBALL", "colour",color)
-        attributor("sport","TENNIS", "colour",color)
+        attributor("sport","BBALL","outline", str(color[0]))
+        attributor("sport","SWIM", "outline", str(color[1]))
+        attributor("sport","CRICKET", "outline", str(color[2]))
+        attributor("sport","MMA", "outline", str(color[3]))
+        attributor("sport","NETBALL", "outline", str(color[4]))
+        attributor("sport","TENNIS", "outline",str(color[5]))
 
+    print("BBALL[0], SWIM[1], CRICKET[2], MMA[3], NETBALL[4], TENNIS[5]")
+    print(color)
 
 ### EDGE GENERATION
 def house_edge():
@@ -217,7 +223,7 @@ def house_edge():
     node_con_test("house","C","green","1")
     node_con_test("house","K","red","1")
 
-def classes_edge(given_colour,):
+def classes_edge(given_colour):
     for node in G:
         raw = G.nodes[node]["classes"]
         worklist = raw.split("~")
@@ -253,12 +259,13 @@ def course_edge():
     '''
     Draws graph where all student who want the same course are connected.
     '''
-    node_con_test("course","COM", "blue","1")
-    node_con_test("course","FIN", "green","1")
-    node_con_test("course","MED", "red","1")
-    node_con_test("course","ENG", "black","1")
-    node_con_test("course","ART", "pink","1")
-    node_con_test("course","LAW", "yellow","1")
+    node_con_test("course","COM", "blue","Commerce")
+    node_con_test("course","FIN", "green","Finance")
+    node_con_test("course","MED", "red","Medicine")
+    node_con_test("course","ENG", "black","Engineering")
+    node_con_test("course","ART", "pink","Art")
+    node_con_test("course","LAW", "yellow","Law")
+
 
 def f1_edge():
     '''
@@ -294,13 +301,19 @@ init()
 
 ### ADD GRAPH ELEMENTS HERE
 
-#sport_node("colour",["yellow","blue", "green", "red", "gold", "lime"])
+
 #genshin_edge()
 #nodesize = nx.get_node_attributes(G, 'weight').values()
-classes_edge("black")
+year_node()
+house_node("colour")
+#classes_edge("black")
+#sport_node("outline",["yellow","blue", "green", "red", "gold", "lime"])
+#sport_node("outline",["pink","pink", "pink", "pink", "pink", "pink"])
+course_edge()
+
 
 ### GRAPH DRAWING
-def draw_graph():
+def draw_graph(cheese):
     # position of nodes
     pos = nx.spring_layout(G, seed=42)               
     
@@ -333,18 +346,30 @@ def draw_graph():
         edge_color=edgecolor
     )
 
-    edgelabels = {}
-    for n1, n2, data in G.edges.data():
-        edgelabels[(n1, n2)] = data['weight']
-    nx.draw_networkx_edge_labels(
-        G,
-        pos,
-        edge_labels=edgelabels,
-        font_size=7
-    )
-    
+    if cheese == "weight":
+        edgelabels = {}
+        for n1, n2, data in G.edges.data():
+            edgelabels[(n1, n2)] = data['weight']
+        nx.draw_networkx_edge_labels(
+            G,
+            pos,
+            edge_labels=edgelabels,
+            font_size=7
+        )
+    else:
+        edgelabels = {}
+        for n1, n2, data in G.edges.data():
+            print(n1,n2,data)
+            edgelabels[(n1, n2)] = data['label']
+        nx.draw_networkx_edge_labels(
+            G,
+            pos,
+            edge_labels=edgelabels,
+            font_size=7
+        )
 
     #print(G.nodes[11])
 
     plt.show()
-draw_graph()
+#raw_graph("weight")
+draw_graph("labels")
