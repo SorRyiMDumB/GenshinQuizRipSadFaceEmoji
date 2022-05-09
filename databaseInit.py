@@ -51,6 +51,7 @@ def execute_query(connection, query):
         print(f"The error '{e}' occurred")
 
 def execute_read_query(connection, query):
+
     cursor = connection.cursor()
     result = None
     try:
