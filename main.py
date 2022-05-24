@@ -183,13 +183,13 @@ def attributor(param,testcase,atri,atri_data):
         # i = nodes that statfiy condition
         G.nodes[i][atri] = atri_data
 
-def cheesyfunc(arti):
-    list = []
+def cheesyfunc(cheese):
+    cheeseholder = []
 
-    cheese = nx.get_node_attributes(G, arti).values()
-    for i in cheese:
-        list.append(i)
-    return list
+    cheesebutwithcream = nx.get_node_attributes(G, cheese).values()
+    for i in cheesebutwithcream:
+        cheeseholder.append(i)
+    return cheeseholder
 
 ### NODE GENERATION
 def year_node():
